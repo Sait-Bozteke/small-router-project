@@ -1,31 +1,34 @@
-import {useEffect,useState} from 'react'
-import styles from "./Product.module.css"
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import styles from "./Product.module.css";
 
 const Products = () => {
-  const [products, setproducts] = useState([])
-  useEffect(() => {
-   fetch('https://fakestoreapi.com/products/1')
-            .then(res=>res.json())
-            .then(json=>setproducts(json))
-  }, [])
-  
-  
-  return (
-    <div><h2>Product Page</h2>
-    <div className={styles.products}>
-      {products.map(each=>(
-      <Link to={`/details/${each.id}`}>
-      <div key={each.id} className={styles.product}>
-<h6>{each.category}</h6>
-<p>{each.title}</p>
-<img src={each.image} style={{width:"100px"}} alt="" />
-        </div>
-        </Link>  
-      ))}
-    </div>
-    
-    </div>
-  )
-}
+  const [products, setProducts] = useState([]);
 
-export default Products
+  useEffect(() => {
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => res.json())
+      .then((json) => setProducts(json));
+  }, []);
+
+  return (
+    <div>
+      <h2>Product Page</h2>
+      <div className={styles.products}>
+        {products.map((each) => (
+          <Link
+            to={`details/${each.id}`}
+            key={each.id}
+            className={styles.product}
+          >
+            <h6>{each.category}</h6>
+            <p>{each.title}</p>
+            <img style={{ width: "100px" }} src={each.image} alt="" />
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Products;
